@@ -11,10 +11,14 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-    data = {"data": make_full_search()}
+
     return render_template('index.html',
-                            title='Home',
-                            data=data)
+                            title='Home')
+
+@app.route('/steps', methods=['GET', 'POST'])
+def steps():
+    return render_template('steps.html')
+
 
 @app.route('/results')
 def results():
