@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron step1">
+    <div class="container">
+        <h1>Step 1</h1>
+        <h2>Is there a special time frame when you want to travel?</h2>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="timerange">
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                                    </div>
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary next">No ></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="jumbotron step2" style="display: none;">
+    <div class="container">
+        <h1>Step 2</h1>
+        <h2>For how long would you like to cruise?</h2>
+        <div class="row">
+            <div class="col-md-3 panel panel-default durationTile">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Short</h3>
+                </div>
+                <div class="panel-body">
+                    < 4 days
+                </div>
+            </div>
+            <div class="col-md-3 panel panel-info durationTile">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Medium</h3>
+                </div>
+                <div class="panel-body">
+                    4 - 14 days
+                </div>
+            </div>
+            <div class="col-md-3 panel panel-success durationTile">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Longer</h3>
+                </div>
+                <div class="panel-body">
+                    > 14 days
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron step3" style="display: none;">
+    <div class="container">
+        <h1>Step 3</h1>
+        <h2>Choose your ocean</h2>
+            <img height="300" class="oceans" src="/static/oceans.png" alt="">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="/static/bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/QuestionJourney.js"></script>
+<script>
+    $(function () {
+        QuestionJourney.init({
+            $timeNextButton: $("button.next"),
+            $from: $('#datetimepicker1'),
+            $to: $('#datetimepicker1'),
+            $durationTiles: $(".durationTile"),
+            $regionMap: $("img.oceans"),
+            $step1: $(".step1"),
+            $step2: $(".step2"),
+            $step3: $(".step3")
+        });
+    });
+</script>
+{% endblock %}
