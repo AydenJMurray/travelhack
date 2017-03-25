@@ -20,6 +20,13 @@ def index():
 def home():
     return render_template('home.html')
 
+@app.route('/time')
+def time():
+    sessionkey = session["sessionkey"]
+    print sessionkey
+    return render_template('time.html')
+
+
 def make_request():
     test_request = """
         <request>
@@ -39,11 +46,10 @@ def make_request():
 
     # parse
     root = etree.fromstring(r.text)
-    data = []
-    # loop and print hotel name
-    for element in root.iterfind("results/cruise"):
-        print element.get("session")
-        name = element.get("name")
-        price = element.get("price")
-        data.append("{0} is {1}".format(name, price))
+
+    data = {}
+    for child in root.iterfind("request/method"):
+        session["sessionkey"] = child.get("sessionkey")
+        break
+
     return data
