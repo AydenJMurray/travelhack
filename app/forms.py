@@ -17,3 +17,12 @@ class RegisterForm(Form):
 class NewPostForm(Form):
     post = StringField('Post', validators=[DataRequired, Length(1, 64)])
     submit = SubmitField('Post!')
+
+class RegionForm(Form):
+    pass
+
+class TimeForm(Form):
+    pass
+
+class BoatForm(Form):
+    pass

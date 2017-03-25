@@ -11,10 +11,14 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-    data = {"data": make_request()}
+    data = {"data": make_ship_request()}
     return render_template('index.html',
                             title='Home',
                             data=data)
+
+@app.route('/results')
+def results():
+    return render_template('results.html', results = [1,2,3,4,5])
 
 @app.route('/home')
 def home():
@@ -25,6 +29,15 @@ def time():
     sessionkey = session["sessionkey"]
     cabin_grade_request(sessionkey)
     return render_template('time.html')
+
+def get_session_key(sessionkey):
+    root = etree.fromstring(r.text)
+    data = {}
+    for child in root.iterfind("request/method"):
+        session["sessionkey"] = child.get("sessionkey")
+        break
+    return data
+
 
 def cabin_grade_request(sessionkey):
     request = """
@@ -47,34 +60,48 @@ def cabin_grade_request(sessionkey):
 
 
 
+def make_ship_request():
 
+    line17Request = """<?xml version="1.0"?>
+    <request>
+        <auth username="hackathon" password="pr38ns48" />
+        <method action="getlinecontent" lineid="17"/>
+    </request>"""
 
-
-
-
-def make_request():
-    test_request = """
-        <request>
-         <auth username="hackathon" password="pr38ns48" />
-         <method action="simplesearch" sitename="cruisedemo.traveltek.net"
-            status="Live" type="cruise">
-          <searchdetail type="cruise" startdate="2017-04-01" enddate="2017-04-30"
-            adults="2" children="0" sid="30115" resultkey="default">
-          </searchdetail>
-         </method>
-        </request>
-        """
+    line22Request = """<?xml version="1.0"?>
+    <request>
+        <auth username="hackathon" password="pr38ns48" />
+        <method action="getlinecontent" lineid="22"/>
+    </request>"""
 
     #print test_request
     url = "http://fusionapi.traveltek.net/0.9/interface.pl"
-    r = requests.post(url, data={"xml": test_request})
+    line17 = requests.post(url, data={"xml": line17Request})
+    line22 = requests.post(url, data={"xml": line22Request})
 
     # parse
-    root = etree.fromstring(r.text)
 
-    data = {}
-    for child in root.iterfind("request/method"):
-        session["sessionkey"] = child.get("sessionkey")
-        break
+    line17Tree = etree.fromstring(line17.text)
+    line22Tree = etree.fromstring(line22.text)
+    #print line17.text
+    #print line22.text
 
-    return data
+    shipList = []
+    # loop and print hotel name
+    for element in line17Tree.iterfind("results/line/ships/ship"):
+        #print element.get("session")
+        name = element.get("name")
+        print name
+        #desc = element.get("description")
+        shipList.append(name)
+    for element in line22Tree.iterfind("results/line/ships/ship"):
+        name=element.get("name")
+        print name
+        shipList.append(name)
+
+    shipList = sorted(shipList)
+    return shipList
+
+def make_full_search():
+    searchCriteria = "<searchdetail"
+    #region = form.data
