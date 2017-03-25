@@ -1,0 +1,21 @@
+{% extends "base.html" %}]
+{% block content %}
+<h1>Results</h1>
+<div class="container">
+
+
+    {% for result in results %}
+    <div class="row">
+        <div class="col-md-4"><img src="http://static.traveltek.net/cruisepics/local_shipimages_small/1423568677.jpg"></div>
+        <div class="col-md-2">{{ result[0] }}</div>
+        <div class="col-md-2">{{ result[1] }}</div>
+        <div class="col-md-2">{{ result[2] }}</div>
+        <div class="col-md-2">{{ result[3] }}</div>
+        <br>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}
