@@ -42,13 +42,10 @@ def make_ship_request():
     # parse
     line17Tree = etree.fromstring(line17.text)
     line22Tree = etree.fromstring(line22.text)
-    #print line17.text
-    #print line22.text
+
 
     shipList = {}
-    # loop and print hotel name
     for element in line17Tree.iterfind("results/line/ships/ship"):
-        #print element.get("session")
         name = element.get("name")
         ID = element.get("id")
         shipList[name] = ID
