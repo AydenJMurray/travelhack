@@ -23,6 +23,11 @@ def steps():
 @app.route('/results')
 def results():
     results = make_full_search()
+    images =["/static/more.jpeg", "/static/other.jpeg", "/static/images.jpeg", "http://static.traveltek.net/cruisepics/local_shipimages_small/1423568677.jpg"]
+    import random
+    for item in results:
+        item.append(random.choice(images))
+    results = sorted(results, reverse=True)
     return render_template('results.html', results=results)
 
 @app.route('/home')
@@ -61,6 +66,7 @@ def cabin_grade_request(sessionkey):
     o = xmltodict.parse(r.text)
     json = json.dumps(o)
     a = json.parse(json)
+
     print a["response"]["results"]["grades"]
 
 
