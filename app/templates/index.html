@@ -1,7 +1,38 @@
 {% extends "base.html" %}]
 {% block content %}
-    {% if data %}
-        {{ data }}
-    {% endif %}
+<div id="SubHeading">Find your pefect cruise...</div>
+<div id="ChooseBy">Choose by Region</div>
 
+
+<div id="level1">
+    <div id="cloudOne"><a href="/steps"><img src="/static/Images/cloud.png" height="150px" width="150px"></a><h2 id="text1">Duration</h2></div>
+</div>
+
+
+<div id="level2">
+    <div id="cloudTwo"><img src="/static/Images/cloud.png" height="120px" width="140px"><h2 id="text2">Region</h2></div>
+</div>
+<div id="level3">
+    <div id="cloudThree"><img src="/static/Images/cloud.png" height="110px" width="110px"><h2 id="text3">Ship</h2></div>
+</div>
+
+<div class="top">
+    <div class="boat"><img src="/static/Images/cruiseship.png" alt=""></div>
+    <div class="waves"></div>
+</div>
+<div class="bottom">
+    <div class="float">
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" href="/static/CSS/shipAnimation.css">
+<link rel="stylesheet" href="/static/CSS/CloudAnimation.css">
+<link rel="stylesheet" href="/static/CSS/stylesheetOne.css">
+
+<!-- fonts-->
+<link href='//fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
 {% endblock %}

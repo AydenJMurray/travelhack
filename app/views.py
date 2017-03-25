@@ -11,10 +11,8 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-    data = {"data": make_request()}
     return render_template('index.html',
-                            title='Home',
-                            data=data)
+                            title='Home')
 
 def make_request():
     test_request = """

@@ -1,0 +1,90 @@
+h2{
+    position: relative;
+    margin-top:-100px;
+    margin-left:30px;
+}
+
+#text1{
+    position: relative;
+    margin-top:-80px;
+    margin-left:30px;
+}
+
+#text2{
+    position: relative;
+    margin-top:-70px;
+    margin-left:30px;
+}
+
+#text3{
+    position: relative;
+    margin-top:-70px;
+    margin-left:30px;
+}
+
+#cloudOne{
+     animation: cloud1 5s infinite;
+     width: 10px;
+     height: 10px;
+     position: relative;
+}
+
+#cloudTwo{
+    animation: cloud2 5s infinite;
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+
+#cloudThree{
+    animation: cloud3 5s infinite;
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+
+#level1{
+    width:100%;
+    height:100px;
+   /* background-color: lime;*/
+    padding-left:28%;
+}
+
+#level2{
+    width:40%;
+    height:200px;
+  /* background-color: purple;*/
+    padding-left:50%;
+}
+
+#level3{
+    width:100%;
+    height:100px;
+    padding-left:20%;
+   /* background-color: pink;*/
+}
+
+@keyframes cloud1 {
+    0%   {left:0px; top:0px;}
+    25%  {left:75px; top:0px;}
+    50%  {left:150px; top:0px;}
+    75%  {left:0px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+@keyframes cloud2 {
+    0%   {left:0px; top:0px;}
+    25%  {left:150px; top:0px;}
+    50%  {left:200px; top:0px;}
+    75%  {left:0px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+@keyframes cloud3 {
+    0%   {left:0px; top:0px;}
+    25%  {left:-90px; top:0px;}
+    50%  {left:-90px; top:0px;}
+    75%  {left:0px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
