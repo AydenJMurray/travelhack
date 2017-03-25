@@ -11,9 +11,9 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-
     return render_template('index.html',
                             title='Home')
+
 
 @app.route('/steps', methods=['GET', 'POST'])
 def steps():
