@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, url_for, session, g
 from app import app
-from .forms import LoginForm, RegisterForm, NewPostForm
+from .forms import LoginForm, RegisterForm, NewPostForm, RegionForm, TimeForm, BoatForm
 from datetime import datetime
 import requests
 from lxml import etree
@@ -11,7 +11,7 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-    data = {"data": make_ship_request()}
+    data = {"data": make_full_search()}
     return render_template('index.html',
                             title='Home',
                             data=data)
@@ -45,23 +45,100 @@ def make_ship_request():
     #print line17.text
     #print line22.text
 
-    shipList = []
+    shipList = {}
     # loop and print hotel name
     for element in line17Tree.iterfind("results/line/ships/ship"):
         #print element.get("session")
         name = element.get("name")
-        print name
-        #desc = element.get("description")
-        shipList.append(name)
+        ID = element.get("id")
+        shipList[name] = ID
+
     for element in line22Tree.iterfind("results/line/ships/ship"):
         name=element.get("name")
-        print name
-        shipList.append(name)
+        ID = element.get("id")
+        shipList[name] = ID
 
     shipList = sorted(shipList)
     return shipList
 
 def make_full_search():
-    searchCriteria = "<searchdetail"
-    #region = form.data 
-    if region
+
+    regionForm = RegionForm()
+    timeForm = TimeForm()
+    boatForm = BoatForm()
+    shipList = make_ship_request()
+    regionList = {"Africa":17,
+                "Alaska":13,
+                "Asia & Indian Ocean":5,
+                "Australasia":14,
+                "Bahamas":28,
+                "Baltic":20,
+                "Bermuda":21,
+                "Black Sea":21,
+                "Canaries":1,
+                "Caribbean":2,
+                "Central America":3,
+                "China":24,
+                "Dubai & Emirates":23,
+                "Egypt & Red Sea":25,
+                "Europe":4,
+                "Fiji":32,
+                "Hawaii":6,
+                "Iberian Peninsula":22,
+                "Mediterranean":7,
+                "Mexico":26,
+                "Middle East":19,
+                "North America":8,
+                "Pacific":15,
+                "Panama Canal":31,
+                "Polar Regions":18,
+                "Russia":29,
+                "Scandinavia":9,
+                "South America":10,
+                "Transatlantic":11,
+                "United Kingdom":16,
+                "Worldwide":12}
+
+
+    region = "Caribbean"
+    startDate = None
+    endDate = None
+    boat = None
+
+    searchCriteria = "<searchdetail sid=\"30115\" type=\"cruise\" resultkey=\"default\" startdate=\"2017-03-25\" enddate=\"2017-04-08\" adults=\"2\" children=\"0\""
+
+    if (region != None):
+        searchCriteria = searchCriteria + " regionid=" + "\"" + str(regionList[region]) + "\""
+    if (boat != None):
+        searchCriteria = searchCriteria + " shipid=" + "\"" + shipList[ship] + "\""
+
+    searchCriteria = searchCriteria + " >"
+
+    fullRequest = """<?xml version="1.0"?>
+    <request>
+        <auth username="hackathon" password="pr38ns48" />
+        <method action="simplesearch" sitename="cruisedemo.traveltek.net"
+            status="Live" type="cruise"> \n""" + searchCriteria + """\n
+        </searchdetail>
+        </method>
+    </request>"""
+
+    print fullRequest
+
+    url = "http://fusionapi.traveltek.net/0.9/interface.pl"
+    searchResults = requests.post(url, data={"xml": fullRequest})
+
+    searchTree = etree.fromstring(searchResults.text)
+    print searchResults.text
+    cruises = []
+    for element in searchTree.iterfind("results/cruise"):
+        name = element.get("name")
+        currency = element.get("currency")
+        price = element.get("price")
+        engine = element.get("engine")
+        #regionid = element.get("regionid")
+
+        cruises.append([name, currency, price, engine])#regionList.keys()[regionList.values().index(regionid)]])
+
+
+    return cruises
