@@ -1,0 +1,37 @@
+{% extends "base.html" %}]
+{% block content %}
+    <div class="page-header">
+        <h1>Hello, {{ user.name }}!</h1>
+    </div>
+    <div class="jumbotron">
+        <form action="" method="post" name="new_post">
+            {{ form.hidden_tag() }}
+            <p>Say Something:<br>
+                {{ form.post(size=80) }}<br>
+            </p>
+            <p><button class="btn btn-info" role="button" type="submit" value="Post!">Post!</button></p>
+        </form>
+    </div>
+        {% if posts %}
+            <div class="col-md-offset-1">
+                <h3>Posts:</h3>
+            </div>
+            <br>
+            {% for post in posts %}
+            <div class="row">
+                <div id="post-row">
+                    <div class="col-sm-2 col-md-2 col-md-offset-1">
+                        <p><img src="/static/small_logo.png"></p>
+                    </div>
+                    <div class="col-sm-8 col-md-8">
+                        {{ post.author.name }}
+                        {{ post.body }}
+                        {{ post.timestamp }}
+                    </div>
+                </div>
+                <br>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+{% endblock %}
