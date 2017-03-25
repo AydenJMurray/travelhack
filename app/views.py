@@ -23,8 +23,33 @@ def home():
 @app.route('/time')
 def time():
     sessionkey = session["sessionkey"]
-    print sessionkey
+    cabin_grade_request(sessionkey)
     return render_template('time.html')
+
+def cabin_grade_request(sessionkey):
+    request = """
+        <request>
+          <auth username="hackathon" password="pr38ns48" />
+          <method action="getcabingrades" sessionkey="{0}" resultno="{1}" />
+        </request>
+    """.format(sessionkey, "302_25.0")
+
+    url = "http://fusionapi.traveltek.net/0.9/interface.pl"
+    r = requests.post(url, data={"xml": request})
+    root = etree.fromstring(r.text)
+    print "******"
+    import xmltodict, json
+
+    o = xmltodict.parse(r.text)
+    json = json.dumps(o)
+    a = json.parse(json)
+    print a["response"]["results"]["grades"]
+
+
+
+
+
+
 
 
 def make_request():
