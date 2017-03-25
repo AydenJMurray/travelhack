@@ -11,10 +11,17 @@ def index():
     form = NewPostForm()
     if form.validate_on_submit:
         print form
-    data = {"data": make_request()}
+    #data = {"data": make_request()}
     return render_template('index.html',
-                            title='Home',
-                            data=data)
+                            title='Home')
+
+@app.route('/steps', methods=['GET', 'POST'])
+def steps():
+    return render_template('steps.html')
+
+@app.route('/results', methods=['GET', 'POST'])
+def results():
+    return render_template('results.html')
 
 def make_request():
     test_request = """
