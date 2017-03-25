@@ -28,7 +28,6 @@ def results():
 @app.route('/home')
 def home():
     return render_template('home.html')
->>>>>>> d1cf3a3152084dcb39d56fd410a0bf61f8f1d1ff
 
 @app.route('/time')
 def time():
